@@ -3,6 +3,7 @@ import java.awt.*;
 abstract class Shape {
     private int width, height;
     private int xPosition, yPosition;
+    private int centerX, centerY;
     private String letter;
     private Color shapeColor, letterColor;
 
@@ -16,6 +17,10 @@ abstract class Shape {
     public final int getX(){ return xPosition; }
 
     public final int getY(){ return yPosition; }
+
+    public final int getCenterX(){ return centerX; }
+
+    public final int getCenterY(){ return centerY; }
 
     public final String getLetter(){ return letter; }
 
@@ -42,11 +47,16 @@ abstract class Shape {
 
     public final void setLColor(int r, int g, int b){ letterColor = new Color(r, g, b); }
 
+    public final void setCenter(){
+        centerX = xPosition + (width / 2);
+        centerY = yPosition + (height / 2);
+    }
+
 
     public Shape(){
         this(0, 0, 0, 0, "", 0, 0, 0, 0, 0, 0);
     }
-    
+
     public Shape(int w, int h, int x, int y, String l, Color s, Color lC){
         setWidth(w);
         setHeight(h);
@@ -55,6 +65,7 @@ abstract class Shape {
         setLetter(l);
         setSColor(s);
         setLColor(lC);
+        setCenter();
     }
 
     public Shape(int w, int h, int x, int y, String l, int sR, int sG, int sB, int lR, int lG, 
@@ -66,5 +77,6 @@ abstract class Shape {
         setLetter(l);
         setSColor(sR, sG, sB);
         setLColor(lR, lG, lB);
+        setCenter();
     }
 }

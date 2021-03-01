@@ -6,6 +6,9 @@ abstract class Shape {
     private String letter;
     private Color shapeColor, letterColor;
 
+    // Implement later
+    // private Face face;
+
     public final int getWidth(){ return width; }
 
     public final int getHeight(){ return height; }
@@ -38,4 +41,30 @@ abstract class Shape {
     public final void setLColor (Color l){letterColor = l; }
 
     public final void setLColor(int r, int g, int b){ letterColor = new Color(r, g, b); }
+
+
+    public Shape(){
+        this(0, 0, 0, 0, "", 0, 0, 0, 0, 0, 0);
+    }
+    
+    public Shape(int w, int h, int x, int y, String l, Color s, Color lC){
+        setWidth(w);
+        setHeight(h);
+        setX(x);
+        setY(y);
+        setLetter(l);
+        setSColor(s);
+        setLColor(lC);
+    }
+
+    public Shape(int w, int h, int x, int y, String l, int sR, int sG, int sB, int lR, int lG, 
+                int lB){
+        setWidth(w);
+        setHeight(h);
+        setX(x);
+        setY(y);
+        setLetter(l);
+        setSColor(sR, sG, sB);
+        setLColor(lR, lG, lB);
+    }
 }

@@ -1,14 +1,14 @@
 import java.awt.*;
 
 abstract class Shape {
-    private int width, height;
-    private int xPosition, yPosition;
-    private int centerX, centerY;
-    private String letter;
-    private Color shapeColor, letterColor;
+    protected int width, height;
+    protected int xPosition, yPosition;
+    protected int centerX, centerY;
+    protected String letter;
+    protected Color shapeColor, letterColor;
 
     // Implement later
-    // private Face face;
+    // protected Face face;
 
     public final int getWidth(){ return width; }
 
@@ -79,4 +79,9 @@ abstract class Shape {
         setLColor(lR, lG, lB);
         setCenter();
     }
+
+    public abstract void paintShape(Graphics g);
+
+    // Implement later
+    // public void paintFace(){}
 }

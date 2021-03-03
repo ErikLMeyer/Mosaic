@@ -8,7 +8,7 @@ public class MosaicFrame extends JFrame {
 
     MosaicFrame(){
         setTitle("Mosaic");
-        setBounds(100, 100, 840, 840);
+        setBounds(0, 0, 840, 840);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         myMosaic = new MosaicPanel();

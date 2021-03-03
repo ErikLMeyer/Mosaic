@@ -56,59 +56,30 @@ public class MosaicPanel extends JPanel{
         return new Color(red, green, blue);
     }
 
-    public Color adjustedColor(Color c){
-        Color potColor = generateColor();
-        int red = potColor.getRed();
-        int green = potColor.getGreen();
-        int blue = potColor.getBlue();
+    public int adjustValue(int sCol, int lCol){
+        int finalVal = lCol;
+        if (Math.abs(sCol - lCol) < COL_DIF){
+            if (lCol >= sCol){
+                if (lCol + COL_DIF >= 0xFF){
+                    finalVal = sCol - COL_DIF;
+                } else
+                    finalVal = lCol + COL_DIF;
+            } else{
+                if (lCol - COL_DIF <= 0){
+                    finalVal = sCol + COL_DIF;
+                } else{
+                    finalVal = lCol - COL_DIF;
+                }
+            }
+        }
 
-        /*
-            This big ol' block of if statements determines if each color component is within a value
-            of 50 of the passed in color's component. If it is the component is adjusted to be 
-            outside that range.
-        */
-        if (Math.abs(c.getRed() - potColor.getRed()) < COL_DIF){
-            if (potColor.getRed() >= c.getRed()){
-                if (potColor.getRed() + COL_DIF >= 0xFF){
-                    red = c.getRed() - COL_DIF;
-                } else
-                    red = potColor.getRed() + COL_DIF;
-            } else{
-                if (potColor.getRed() - COL_DIF < 0){
-                    red = c.getRed() + COL_DIF;
-                } else{
-                    red = potColor.getRed() - COL_DIF;
-                }
-            }
-        }
-        if (Math.abs(c.getGreen() - potColor.getGreen()) < COL_DIF){
-            if (potColor.getGreen() >= c.getGreen()){
-                if (potColor.getGreen() + COL_DIF >= 0xFF){
-                    green = c.getGreen() - COL_DIF;
-                } else
-                    green = potColor.getGreen() + COL_DIF;
-            } else{
-                if (potColor.getGreen() - COL_DIF < 0){
-                    green = c.getGreen() + COL_DIF;
-                } else{
-                    green = potColor.getGreen() - COL_DIF;
-                }
-            }
-        }
-        if (Math.abs(c.getBlue() - potColor.getBlue()) < COL_DIF){
-            if (potColor.getBlue() >= c.getBlue()){
-                if (potColor.getBlue() + COL_DIF >= 0xFF){
-                    blue = c.getBlue() - COL_DIF;
-                } else
-                    blue = potColor.getBlue() + COL_DIF;
-            } else{
-                if (potColor.getBlue() - COL_DIF < 0){
-                    blue = c.getBlue() + COL_DIF;
-                } else{
-                    blue = potColor.getBlue() - COL_DIF;
-                }
-            }
-        }
+        return finalVal;
+    }
+
+    public Color adjustedColor(Color sCol, Color lCol){
+        int red = adjustValue(sCol.getRed(), lCol.getRed());
+        int green = adjustValue(sCol.getGreen(), lCol.getGreen());
+        int blue = adjustValue(sCol.getBlue(), lCol.getBlue());
 
         return new Color(red, green, blue);
     }
@@ -116,8 +87,10 @@ public class MosaicPanel extends JPanel{
     public void setColors(){
         for(int row = 0; row < GRID_SIZE; row++){
             for (int col = 0; col < GRID_SIZE; col++){
-                tilling[row][col].setSColor(generateColor());
-                tilling[row][col].setLColor(adjustedColor(tilling[row][col].getSColor()));
+                Color sCol = generateColor();
+                Color lCol = generateColor();
+                tilling[row][col].setSColor(sCol);
+                tilling[row][col].setLColor(adjustedColor(sCol, lCol));
             }
         }
     }

@@ -12,7 +12,6 @@ public class MosaicPanel extends JPanel{
         for(int row = 0; row < GRID_SIZE; row++){
             for (int col = 0; col < GRID_SIZE; col++){
                 int polygon = (int)(Math.random() * 2);
-                // System.out.println("polygon = " + polygon)
                 if (polygon == 0){
                     tilling[row][col] = new Square();
                 } else{
@@ -31,6 +30,7 @@ public class MosaicPanel extends JPanel{
                 tilling[row][col].setHeight(height);
                 tilling[row][col].setX(row * width);
                 tilling[row][col].setY(col * height);
+                tilling[row][col].setCenter();
             }
         }
     }
@@ -56,24 +56,77 @@ public class MosaicPanel extends JPanel{
         return new Color(red, green, blue);
     }
 
-    public boolean colorRange(Color c1, Color c2){
-        if (c1.getRed() + COL_DIF <= c2.getRed() || c1.getRed() - COL_DIF >= c2.getRed()){
-            if (c1.getGreen() + COL_DIF <= c2.getGreen() || c1.getGreen() - COL_DIF >= c2.getGreen()){
-                if (c1.getBlue() + COL_DIF <= c2.getBlue() || c1.getBlue() - COL_DIF >= c2.getBlue()){
-                    return true;
+    public Color adjustedColor(Color c){
+        Color potColor = generateColor();
+        int red = potColor.getRed();
+        int green = potColor.getGreen();
+        int blue = potColor.getBlue();
+
+        boolean changed = false;
+
+        /*
+            This big ol' block of if statements determines if each color component is within a value
+            of 50 of the passed in color's component. If it is the component is adjusted to be 
+            outside that range.
+        */
+        if (potColor.getRed() - c.getRed() < 50 && potColor.getRed() - c.getRed() > -50){
+            if (potColor.getRed() >= c.getRed()){
+                if (potColor.getRed() + COL_DIF >= 0xFF){
+                    red = c.getRed() - COL_DIF;
+                } else
+                    red = potColor.getRed() + COL_DIF;
+            } else{
+                if (potColor.getRed() - COL_DIF < 0){
+                    red = c.getRed() + COL_DIF;
+                } else{
+                    red = potColor.getRed() - COL_DIF;
                 }
             }
+            changed = true;
         }
-        return false;
+        if (potColor.getGreen() - c.getGreen() < 50 && potColor.getGreen() - c.getGreen() > -50){
+            if (potColor.getGreen() >= c.getGreen()){
+                if (potColor.getGreen() + COL_DIF >= 0xFF){
+                    green = c.getGreen() - COL_DIF;
+                } else
+                    green = potColor.getGreen() + COL_DIF;
+            } else{
+                if (potColor.getGreen() - COL_DIF < 0){
+                    green = c.getGreen() + COL_DIF;
+                } else{
+                    green = potColor.getGreen() - COL_DIF;
+                }
+            }
+            changed = true;
+        }
+        if (potColor.getBlue() - c.getBlue() < 50 && potColor.getBlue() - c.getBlue() > -50){
+            if (potColor.getBlue() >= c.getBlue()){
+                if (potColor.getBlue() + COL_DIF >= 0xFF){
+                    blue = c.getBlue() - COL_DIF;
+                } else
+                    blue = potColor.getBlue() + COL_DIF;
+            } else{
+                if (potColor.getBlue() - COL_DIF < 0){
+                    blue = c.getBlue() + COL_DIF;
+                } else{
+                    blue = potColor.getBlue() - COL_DIF;
+                }
+            }
+            changed = true;
+        }
+
+        if (changed)
+            System.out.println("This color has changed");
+
+        System.out.println(c + "\n" + potColor + "\nRed = " + red + ", Green = " + green + ", Blue = " + blue);
+        return new Color(red, green, blue);
     }
 
     public void setColors(){
         for(int row = 0; row < GRID_SIZE; row++){
             for (int col = 0; col < GRID_SIZE; col++){
                 tilling[row][col].setSColor(generateColor());
-                do {
-                    tilling[row][col].setLColor(generateColor());
-                } while(colorRange(tilling[row][col].getSColor(), tilling[row][col].getLColor()));
+                tilling[row][col].setLColor(adjustedColor(tilling[row][col].getSColor()));
             }
         }
     }
@@ -96,5 +149,6 @@ public class MosaicPanel extends JPanel{
                 tilling[row][col].paintShape(g);
             }
         }
+        // System.out.println(tilling[GRID_SIZE-1][GRID_SIZE-1]);
     }
 }

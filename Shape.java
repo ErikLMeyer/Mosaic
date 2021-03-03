@@ -82,6 +82,12 @@ abstract class Shape {
 
     public abstract void paintShape(Graphics g);
 
+    public String toString(){
+        return "Width: " + width + "; Height: " + height + "; x,y: (" + xPosition + "," + yPosition
+         + "); center(x,y): (" + centerX + "," + centerY + "); Letter: " + letter + 
+         "; Shape Color: " + shapeColor + "; Letter Color: " + letterColor;
+    }
+
     // Implement later
     // public void paintFace(){}
 }

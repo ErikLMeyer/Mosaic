@@ -131,6 +131,13 @@ public class MosaicPanel extends JPanel{
         setColors();
     }
 
+    public void retile(){
+        tile();
+        setDimensions();
+        setLetters();
+        setColors();
+    }
+
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 

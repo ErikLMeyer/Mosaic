@@ -62,8 +62,6 @@ public class MosaicPanel extends JPanel{
         int green = potColor.getGreen();
         int blue = potColor.getBlue();
 
-        boolean changed = false;
-
         /*
             This big ol' block of if statements determines if each color component is within a value
             of 50 of the passed in color's component. If it is the component is adjusted to be 
@@ -82,7 +80,6 @@ public class MosaicPanel extends JPanel{
                     red = potColor.getRed() - COL_DIF;
                 }
             }
-            changed = true;
         }
         if (potColor.getGreen() - c.getGreen() < 50 && potColor.getGreen() - c.getGreen() > -50){
             if (potColor.getGreen() >= c.getGreen()){
@@ -97,7 +94,6 @@ public class MosaicPanel extends JPanel{
                     green = potColor.getGreen() - COL_DIF;
                 }
             }
-            changed = true;
         }
         if (potColor.getBlue() - c.getBlue() < 50 && potColor.getBlue() - c.getBlue() > -50){
             if (potColor.getBlue() >= c.getBlue()){
@@ -112,13 +108,8 @@ public class MosaicPanel extends JPanel{
                     blue = potColor.getBlue() - COL_DIF;
                 }
             }
-            changed = true;
         }
 
-        if (changed)
-            System.out.println("This color has changed");
-
-        System.out.println(c + "\n" + potColor + "\nRed = " + red + ", Green = " + green + ", Blue = " + blue);
         return new Color(red, green, blue);
     }
 

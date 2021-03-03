@@ -67,7 +67,7 @@ public class MosaicPanel extends JPanel{
             of 50 of the passed in color's component. If it is the component is adjusted to be 
             outside that range.
         */
-        if (potColor.getRed() - c.getRed() < 50 && potColor.getRed() - c.getRed() > -50){
+        if (Math.abs(c.getRed() - potColor.getRed()) < COL_DIF){
             if (potColor.getRed() >= c.getRed()){
                 if (potColor.getRed() + COL_DIF >= 0xFF){
                     red = c.getRed() - COL_DIF;
@@ -81,7 +81,7 @@ public class MosaicPanel extends JPanel{
                 }
             }
         }
-        if (potColor.getGreen() - c.getGreen() < 50 && potColor.getGreen() - c.getGreen() > -50){
+        if (Math.abs(c.getGreen() - potColor.getGreen()) < COL_DIF){
             if (potColor.getGreen() >= c.getGreen()){
                 if (potColor.getGreen() + COL_DIF >= 0xFF){
                     green = c.getGreen() - COL_DIF;
@@ -95,7 +95,7 @@ public class MosaicPanel extends JPanel{
                 }
             }
         }
-        if (potColor.getBlue() - c.getBlue() < 50 && potColor.getBlue() - c.getBlue() > -50){
+        if (Math.abs(c.getBlue() - potColor.getBlue()) < COL_DIF){
             if (potColor.getBlue() >= c.getBlue()){
                 if (potColor.getBlue() + COL_DIF >= 0xFF){
                     blue = c.getBlue() - COL_DIF;
@@ -147,6 +147,5 @@ public class MosaicPanel extends JPanel{
                 tilling[row][col].paintShape(g);
             }
         }
-        // System.out.println(tilling[GRID_SIZE-1][GRID_SIZE-1]);
     }
 }

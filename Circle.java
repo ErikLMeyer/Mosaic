@@ -1,6 +1,7 @@
 import java.awt.*;
 
 public class Circle extends Shape {
+    // Constructors. All of them work as described in Shape
     public Circle(){
         super();
     }
@@ -14,6 +15,7 @@ public class Circle extends Shape {
         super(w, h, x, y, l, sR, sG, sB, lR, lG, lB);
     }
 
+    // Paints a Circle to the screen
     public void paintShape(Graphics g){
         g.setColor(shapeColor);
         g.fillOval(xPosition, yPosition, width, height);

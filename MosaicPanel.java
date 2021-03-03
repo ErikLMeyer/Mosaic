@@ -3,11 +3,15 @@ import java.lang.Math;
 import java.awt.*;
 
 public class MosaicPanel extends JPanel{
+    // Constants. Define number of objects to draw, and the difference in each of the rgb values.
     private final int GRID_SIZE = 12;
     private final int COL_DIF = 50;
+
+    // Member variables
     private Shape tilling[][];
     private int height, width;
 
+    // Fills tilling with a random assortment of Squares and Circles.
     public void tile(){
         for(int row = 0; row < GRID_SIZE; row++){
             for (int col = 0; col < GRID_SIZE; col++){
@@ -21,6 +25,7 @@ public class MosaicPanel extends JPanel{
         }
     }
 
+    // Determines size and position of Shape objects on screen
     public void setDimensions(){
         width = super.getWidth() / GRID_SIZE;
         height = super.getHeight() / GRID_SIZE;
@@ -35,11 +40,13 @@ public class MosaicPanel extends JPanel{
         }
     }
 
+    // Returns a random capitalized letter.
     public String generateLetters(){
         char letterC = (char)(Math.floor((Math.random() * (0x5a - 0x41 + 1)) + 0x41));
         return Character.toString(letterC);
     }
 
+    // Assigns each Shape a random letter.
     public void setLetters(){
         for (int row = 0; row < GRID_SIZE; row++){
             for (int col = 0; col < GRID_SIZE; col++){
@@ -48,6 +55,7 @@ public class MosaicPanel extends JPanel{
         }
     }
 
+    // Returns a Color with randomized rgb values.
     public Color generateColor(){
         int red = (int)(Math.random() * 256);
         int green = (int)(Math.random() * 256);
@@ -56,6 +64,7 @@ public class MosaicPanel extends JPanel{
         return new Color(red, green, blue);
     }
 
+    // Returns an int value such that lCol is outside of a range of 50 from sCol.
     public int adjustValue(int sCol, int lCol){
         int finalVal = lCol;
         if (Math.abs(sCol - lCol) < COL_DIF){
@@ -76,6 +85,7 @@ public class MosaicPanel extends JPanel{
         return finalVal;
     }
 
+    // Returns a Color whose rgb values are noticeably different from sCol.
     public Color adjustedColor(Color sCol, Color lCol){
         int red = adjustValue(sCol.getRed(), lCol.getRed());
         int green = adjustValue(sCol.getGreen(), lCol.getGreen());
@@ -84,6 +94,7 @@ public class MosaicPanel extends JPanel{
         return new Color(red, green, blue);
     }
 
+    // Assigns a randomized Color to each Shape and their letter.
     public void setColors(){
         for(int row = 0; row < GRID_SIZE; row++){
             for (int col = 0; col < GRID_SIZE; col++){
@@ -95,6 +106,7 @@ public class MosaicPanel extends JPanel{
         }
     }
 
+    // Creates a new MosaicPanel
     public MosaicPanel(){
         tilling = new Shape[GRID_SIZE][GRID_SIZE];
 
@@ -104,6 +116,7 @@ public class MosaicPanel extends JPanel{
         setColors();
     }
 
+    // Rerandomizes the Shapes in tilling.
     public void retile(){
         tile();
         setDimensions();
@@ -111,6 +124,7 @@ public class MosaicPanel extends JPanel{
         setColors();
     }
 
+    // Paints Shape objects to screen.
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 

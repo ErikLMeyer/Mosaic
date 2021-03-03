@@ -3,10 +3,12 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MosaicFrame extends JFrame implements ActionListener {
+    // Member variables
     private MosaicPanel myMosaic;
     private JButton randomize;
     private Container mosaicContainer;
 
+    // Constructor. Creates new MosaicFrame
     MosaicFrame(){
         setTitle("Mosaic");
         setLayout(new BorderLayout());
@@ -25,6 +27,7 @@ public class MosaicFrame extends JFrame implements ActionListener {
 
     }
 
+    // Implementation of actionPerformed. Retiles the panel and paints it on the screen.
     public void actionPerformed(ActionEvent e){
         myMosaic.retile();
         update(this.getGraphics());

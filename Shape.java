@@ -1,6 +1,7 @@
 import java.awt.*;
 
 abstract class Shape {
+    // Member variables
     protected int width, height;
     protected int xPosition, yPosition;
     protected int centerX, centerY;
@@ -10,6 +11,7 @@ abstract class Shape {
     // Implement later
     // protected Face face;
 
+    // Getter methods
     public final int getWidth(){ return width; }
 
     public final int getHeight(){ return height; }
@@ -28,6 +30,7 @@ abstract class Shape {
 
     public final Color getLColor(){ return letterColor; }
 
+    // Setter methods
     public final void setWidth(int w){ width = w; }
 
     public final void setHeight(int h){ height = h; }
@@ -52,11 +55,12 @@ abstract class Shape {
         centerY = yPosition + (height / 2);
     }
 
-
+    // Default constructor
     public Shape(){
         this(0, 0, 0, 0, "", 0, 0, 0, 0, 0, 0);
     }
 
+    // Creates new Shape with Color objects for the colors
     public Shape(int w, int h, int x, int y, String l, Color s, Color lC){
         setWidth(w);
         setHeight(h);
@@ -68,6 +72,7 @@ abstract class Shape {
         setCenter();
     }
 
+    // Creates new Shape with individual rgb values for the colors
     public Shape(int w, int h, int x, int y, String l, int sR, int sG, int sB, int lR, int lG, 
                 int lB){
         setWidth(w);
@@ -80,8 +85,10 @@ abstract class Shape {
         setCenter();
     }
 
+    // Abstract method for how to draw the Shape
     public abstract void paintShape(Graphics g);
 
+    // Returns String representation of this Shape
     public String toString(){
         return "Width: " + width + "; Height: " + height + "; x,y: (" + xPosition + "," + yPosition
          + "); center(x,y): (" + centerX + "," + centerY + "); Letter: " + letter + 

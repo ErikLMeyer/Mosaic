@@ -1,4 +1,5 @@
 import java.awt.*;
+import face.*;
 
 abstract class Shape {
     // Member variables
@@ -7,9 +8,7 @@ abstract class Shape {
     protected int centerX, centerY;
     protected String letter;
     protected Color shapeColor, letterColor;
-
-    // Implement later
-    // protected Face face;
+    protected Face face;
 
     // Getter methods
     public final int getWidth(){ return width; }
@@ -29,6 +28,8 @@ abstract class Shape {
     public final Color getSColor(){ return shapeColor; }
 
     public final Color getLColor(){ return letterColor; }
+
+    public final Face getFace(){ return face; }
 
     // Setter methods
     public final void setWidth(int w){ width = w; }
@@ -55,6 +56,12 @@ abstract class Shape {
         centerY = yPosition + (height / 2);
     }
 
+    public final void setFace(Face f){ face = f; }
+
+    public final void setFace(int x, int y, int width, int height){
+        face = new Face(x, y, width, height);
+    }
+
     // Default constructor
     public Shape(){
         this(0, 0, 0, 0, "", 0, 0, 0, 0, 0, 0);
@@ -70,6 +77,7 @@ abstract class Shape {
         setSColor(s);
         setLColor(lC);
         setCenter();
+        setFace(x, y, w, h);
     }
 
     // Creates new Shape with individual rgb values for the colors
@@ -83,6 +91,7 @@ abstract class Shape {
         setSColor(sR, sG, sB);
         setLColor(lR, lG, lB);
         setCenter();
+        setFace(x, y, w, h);
     }
 
     // Abstract method for how to draw the Shape
@@ -94,7 +103,4 @@ abstract class Shape {
          + "); center(x,y): (" + centerX + "," + centerY + "); Letter: " + letter + 
          "; Shape Color: " + shapeColor + "; Letter Color: " + letterColor;
     }
-
-    // Implement later
-    // public void paintFace(){}
 }

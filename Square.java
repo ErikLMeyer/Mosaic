@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class Square extends Shape {
     // Constructors. Works as described in Shape.
-    Square(){
+    public Square(){
         super();
     }
 

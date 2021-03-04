@@ -1,14 +1,15 @@
 import javax.swing.JPanel;
 import java.lang.Math;
 import java.awt.*;
+import java.awt.event.*;
 
-public class MosaicPanel extends JPanel{
+public class MosaicPanel extends JPanel implements MouseListener {
     // Constants. Define number of objects to draw, and the difference in each of the rgb values.
     private final int GRID_SIZE = 12;
     private final int COL_DIF = 50;
 
     // Member variables
-    private Shape tilling[][];
+    private Tile tilling[][];
     private int height, width;
 
     // Fills tilling with a random assortment of Squares and Circles.
@@ -108,12 +109,14 @@ public class MosaicPanel extends JPanel{
 
     // Creates a new MosaicPanel
     public MosaicPanel(){
-        tilling = new Shape[GRID_SIZE][GRID_SIZE];
+        tilling = new Tile[GRID_SIZE][GRID_SIZE];
 
         tile();
         setDimensions();
         setLetters();
         setColors();
+
+        addMouseListener(this);
     }
 
     // Rerandomizes the Shapes in tilling.
@@ -134,5 +137,41 @@ public class MosaicPanel extends JPanel{
                 tilling[row][col].paintShape(g);
             }
         }
+    }
+
+    public void mouseClicked(MouseEvent e){
+        int row = (int)((e.getX() / (double)super.getWidth()) * GRID_SIZE);
+        int col = (int)((double)(e.getY() / (double)super.getHeight()) * GRID_SIZE);
+
+        if (tilling[row][col].getDrawShape()){
+            tilling[row][col].setDrawShape(false);
+        } else{
+            tilling[row][col].setDrawShape(true);
+        }
+        repaint();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // TODO Auto-generated method stub
+
     }
 }

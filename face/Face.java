@@ -13,12 +13,77 @@ public class Face {
     private Oval head;
     private Oval eyes[] = new Oval[2];
     private Smile smile;
+    private int mouthE;
 
     // Returns the height of the head Oval object.
     public int getHeight(){ return head.getHeight(); }
 
     // Returns the width of the head Oval object.
     public int getWidth(){ return head.getWidth(); }
+
+    public void setDimensions(int w, int h){
+        int eyeW = w / 5;
+        int eyeH = h / 3;
+
+        head.setWidth(w);
+        eyes[0].setWidth(eyeW);
+        eyes[1].setWidth(eyeW);
+        smile.setWidth(eyeW * 3);
+
+        head.setHeight(h);
+        eyes[0].setHeight(eyeH);
+        eyes[1].setHeight(eyeH);
+        if (mouthE != 1)
+            smile.setHeight(h / 2);
+    }
+
+    public void setPosition(int x, int y){
+        int eyeX = x + eyes[0].getWidth();
+        int eyeY = y + (eyes[0].getHeight() / 2);
+        int mouthY = y + (head.getHeight() / 2);
+        head.setX(x);
+        eyes[0].setX(eyeX);
+        eyes[1].setX(eyeX + (eyes[1].getWidth() * 2));
+        smile.setX(eyeX);
+
+        head.setY(y);
+        eyes[0].setY(eyeY);
+        eyes[1].setY(eyeY);
+        switch (mouthE){
+            case 0:
+                smile.setY(mouthY);
+                break;
+            case 1:
+                smile.setY(mouthY + (eyes[0].getHeight() / 2));
+                break;
+            case 2:
+                smile.setY(y + eyes[0].getHeight());
+                break;
+            default:
+                assert false: "You should not be here.";
+                break;
+        }
+    }
+
+    public void setAngle(int mouthConstant){
+        switch (mouthConstant){
+            case 0:
+                smile.setStart(FROWN[0]);
+                smile.setArc(FROWN[1]);
+                break;
+            case 1:
+                smile.setStart(NEUTRAL[0]);
+                smile.setArc(NEUTRAL[1]);
+                break;
+            case 2:
+                smile.setStart(SMILE[0]);
+                smile.setArc(SMILE[1]);
+                break;
+            default:
+                assert false: "Invalid value passed.";
+                break;
+        }
+    }
 
     // Default constructor
     public Face(){
@@ -28,39 +93,15 @@ public class Face {
     // Creates a new Face of a given size in a given position.
     public Face(int x, int y, int width, int height){
         // The main Oval
-        head = new Oval(width, height, x, y);
+        head = new Oval();
+        eyes[0] = new Oval();
+        eyes[1] = new Oval();
+        smile = new Smile();
 
-        // Creates the eyes based on the attributes of the head.
-        int eyeW, eyeH, eyeX, eyeY;
-        eyeH = height / 3;
-        eyeW = width / 5;
-        eyeX = x + eyeW;
-        eyeY = y + (eyeH / 2);
-        eyes[0] = new Oval(eyeW, eyeH, eyeX, eyeY);
-        eyes[1] = new Oval(eyeW, eyeH, eyeX + (eyeW*2), eyeY);
-
-        // Creates the mouth based on the attributes of the head and eyes.
-        int mouthE = (int)(Math.random()*3);
-        int mouthX = eyeX;
-        int mouthY = y + (height / 2);
-        int mouthW = eyeW * 3;
-        int mouthH = height / 2;
-
-        // Switch statement determines the state of the mouth.
-        switch(mouthE){
-            case 0:
-                smile = new Smile(mouthX, mouthY, mouthW, mouthH, FROWN[0], FROWN[1]);
-                break;
-            case 1:
-                smile = new Smile(mouthX, mouthY + (eyeH / 2), mouthW, 0, NEUTRAL[0], NEUTRAL[1]);
-                break;
-            case 2:
-                smile = new Smile(mouthX, y + eyeH, mouthW, mouthH, SMILE[0], SMILE[1]);
-                break;
-            default:
-                System.out.println("Learn how to random.");
-                break;
-        }
+        setDimensions(width, height);
+        setPosition(x, y);
+        mouthE = (int)(Math.random()*3);
+        setAngle(mouthE);
     }
 
     // Paints the objects of the Face.

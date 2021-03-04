@@ -37,6 +37,8 @@ public class MosaicPanel extends JPanel implements MouseListener {
                 tilling[row][col].setX(row * width);
                 tilling[row][col].setY(col * height);
                 tilling[row][col].setCenter();
+                tilling[row][col].getFace().setDimensions(width, height);
+                tilling[row][col].getFace().setPosition(row * width, col * height);
             }
         }
     }

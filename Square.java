@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Square extends Shape {
+public class Square extends Tile {
     // Constructors. Works as described in Shape.
     public Square(){
         super();
@@ -17,9 +17,14 @@ public class Square extends Shape {
 
     // Paints a Square to the screen.
     public void paintShape(Graphics g){
-        g.setColor(shapeColor);
-        g.fillRect(xPosition, yPosition, width, height);
-        g.setColor(letterColor);
-        g.drawString(letter, centerX, centerY);
+        if (drawShape){
+            g.setColor(shapeColor);
+            g.fillRect(xPosition, yPosition, width, height);
+            g.setColor(letterColor);
+            g.drawString(letter, centerX, centerY);
+        } else{
+            g.setColor(Color.BLACK);
+            face.paintFace(g);
+        }
     }
 }

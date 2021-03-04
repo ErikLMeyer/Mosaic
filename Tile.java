@@ -1,7 +1,7 @@
 import java.awt.*;
 import face.*;
 
-abstract class Shape {
+abstract class Tile {
     // Member variables
     protected int width, height;
     protected int xPosition, yPosition;
@@ -9,6 +9,7 @@ abstract class Shape {
     protected String letter;
     protected Color shapeColor, letterColor;
     protected Face face;
+    protected boolean drawShape;
 
     // Getter methods
     public final int getWidth(){ return width; }
@@ -30,6 +31,9 @@ abstract class Shape {
     public final Color getLColor(){ return letterColor; }
 
     public final Face getFace(){ return face; }
+
+    // Returns true if Shape should be drawn, false if Face should be.
+    public final boolean getDrawShape(){ return drawShape; }
 
     // Setter methods
     public final void setWidth(int w){ width = w; }
@@ -62,13 +66,15 @@ abstract class Shape {
         face = new Face(x, y, width, height);
     }
 
+    public final void setDrawShape(boolean b){ drawShape = b; }
+
     // Default constructor
-    public Shape(){
+    public Tile(){
         this(0, 0, 0, 0, "", 0, 0, 0, 0, 0, 0);
     }
 
     // Creates new Shape with Color objects for the colors
-    public Shape(int w, int h, int x, int y, String l, Color s, Color lC){
+    public Tile(int w, int h, int x, int y, String l, Color s, Color lC){
         setWidth(w);
         setHeight(h);
         setX(x);
@@ -78,10 +84,11 @@ abstract class Shape {
         setLColor(lC);
         setCenter();
         setFace(x, y, w, h);
+        setDrawShape(true);
     }
 
     // Creates new Shape with individual rgb values for the colors
-    public Shape(int w, int h, int x, int y, String l, int sR, int sG, int sB, int lR, int lG, 
+    public Tile(int w, int h, int x, int y, String l, int sR, int sG, int sB, int lR, int lG, 
                 int lB){
         setWidth(w);
         setHeight(h);
@@ -92,6 +99,7 @@ abstract class Shape {
         setLColor(lR, lG, lB);
         setCenter();
         setFace(x, y, w, h);
+        setDrawShape(true);
     }
 
     // Abstract method for how to draw the Shape

@@ -144,7 +144,7 @@ public class MosaicPanel extends JPanel implements MouseListener {
 
     public void mouseClicked(MouseEvent e) {
         int row = (int) ((e.getX() / (double) super.getWidth()) * GRID_SIZE);
-        int col = (int) ((double) (e.getY() / (double) super.getHeight()) * GRID_SIZE);
+        int col = (int) ((e.getY() / (double) super.getHeight()) * GRID_SIZE);
 
         if (tilling[row][col].getDrawShape()) {
             tilling[row][col].setDrawShape(false);

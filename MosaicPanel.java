@@ -2,8 +2,9 @@ import javax.swing.JPanel;
 import java.lang.Math;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
-public class MosaicPanel extends JPanel implements MouseListener {
+public class MosaicPanel extends JPanel implements MouseListener, MouseMotionListener {
     // Constants. Define number of objects to draw, and the difference in each of
     // the rgb values.
     private final int GRID_SIZE = 12;
@@ -12,6 +13,8 @@ public class MosaicPanel extends JPanel implements MouseListener {
     // Member variables
     private Tile tilling[][];
     private int height, width;
+    private int rowNum, colNum;
+    private ArrayList<Point> toSwap;
 
     // Fills tilling with a random assortment of Squares and Circles.
     public void tile() {
@@ -120,6 +123,8 @@ public class MosaicPanel extends JPanel implements MouseListener {
         setColors();
 
         addMouseListener(this);
+        addMouseMotionListener(this);
+        toSwap = new ArrayList<Point>();
     }
 
     // Rerandomizes the Shapes in tilling.
@@ -142,28 +147,43 @@ public class MosaicPanel extends JPanel implements MouseListener {
         }
     }
 
+    public void swap(int row, int col){
+        if (tilling[row][col].getDrawShape()){
+            tilling[row][col].setDrawShape(false);
+        } else{
+            tilling[row][col].setDrawShape(true);
+        }
+    }
     public void mouseClicked(MouseEvent e) {
         int row = (int) ((e.getX() / (double) super.getWidth()) * GRID_SIZE);
         int col = (int) ((e.getY() / (double) super.getHeight()) * GRID_SIZE);
 
-        if (tilling[row][col].getDrawShape()) {
-            tilling[row][col].setDrawShape(false);
-        } else {
-            tilling[row][col].setDrawShape(true);
-        }
+        swap(row, col);
         repaint();
+    }
+
+    public void setRowAndColumn(MouseEvent e){
+        rowNum = (int) ((e.getX() / (double) super.getWidth()) * GRID_SIZE);
+        colNum = (int) ((e.getY() / (double) super.getHeight()) * GRID_SIZE);
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-
+        setRowAndColumn(e);
+        toSwap.add(new Point(rowNum, colNum));
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
+        int row, col;
+        for (int i = 0; i < toSwap.size(); i++){
+            row = (int) toSwap.get(i).getX();
+            col = (int) toSwap.get(i).getY();
 
+            swap(row, col);
+        }
+        repaint();
+        toSwap.clear();
     }
 
     @Override
@@ -176,5 +196,57 @@ public class MosaicPanel extends JPanel implements MouseListener {
     public void mouseExited(MouseEvent e) {
         // TODO Auto-generated method stub
 
+    }
+
+    
+
+    public boolean inFrame(MouseEvent e){
+        if (e.getX() >= 0 && e.getY() >= 0){
+            if (e.getX() < super.getWidth() && e.getY() < super.getHeight()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasMoved(){
+        if (toSwap.size() > 0){
+            if (rowNum != (int) toSwap.get(toSwap.size()-1).getX() || 
+                colNum != (int) toSwap.get(toSwap.size()-1).getY()){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean inToSwap(){
+        if (toSwap.size() > 0){
+            for (int i = 0; i < toSwap.size(); i++){
+                if (rowNum == (int) toSwap.get(i).getX() && colNum == (int) toSwap.get(i).getY()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        setRowAndColumn(e);
+
+        if (inFrame(e)){
+            if (hasMoved()){
+                if (!inToSwap())
+                    toSwap.add(new Point(rowNum, colNum));
+            }
+        }
+        
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
     }
 }
